@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-//Checking Function-----------------------------------------------------------------
+//Checking Item-----------------------------------------------------------------
 bool isCopiesValid(string s)
 {
     for (int i = 0; i < s.length(); i++)
@@ -99,71 +99,52 @@ bool isDVDGenreValid(string s)
     }
     return false;
 }
+//Checking Customer-----------------------------------------------------------------
+bool isCustomerIdValid(string s)
+{
+    //cout<<"id work"<<endl;
+    return true;
+}
+//check phone number
+bool isPhoneValid(string s)
+{
+    //check length
+    if(s.length()>12||s.length()<9)
+    {
+        cout<<"phone number has 9 to 12 digits"<<endl;
+        return false;
+    }
 
-//Action function-----------------------------------------------------------------
-//sort by id or title
-void swapItem(Item &i1,Item &i2)
-{
-    Item temp=i1;
-    i1=i2;
-    i2=temp;
-}
-//sort item list base on key( 0 for id, 1 for title) in alphabetical order
-void SortListAZ(vector<Item> &itemList,bool usingId=true)
-{
-    for(int i=0;i<itemList.size();i++)//outer
+    //check for digits
+    for(int i=0;i<s.length();i++)
     {
-        for(int j=i+1;j<itemList.size();j++)//inner
+        if(!isdigit(s[i]))
         {
-            if(usingId)//using id to sort
-            {
-                if(itemList.at(i).GetID()>itemList.at(j).GetID())//a-z
-                {
-                    swapItem(itemList.at(i),itemList.at(j));
-                }
-            }
-            else{//using title
-                if(itemList.at(i).GetTitle()>itemList.at(j).GetTitle())//a-z
-                {
-                    swapItem(itemList.at(i),itemList.at(j));
-                }
-            }
+            cout<<"invalid Phone Number"<<endl;
+            return false;
         }
     }
+    return true;
 }
-//sortin list from z- a
-void SortListZA(vector<Item> &itemList,bool usingId=true)
+//check rentAmount
+bool isRentAmountValie(string s)
 {
-    for(int i=0;i<itemList.size();i++)//outer
+    for (int i = 0; i < s.length(); i++)
     {
-        for(int j=i+1;j<itemList.size();j++)//inner
+        if (!isdigit(s[i]))
         {
-            if(usingId)//using id to sort
-            {
-                if(itemList.at(i).GetID()<itemList.at(j).GetID())//a-z
-                {
-                    swapItem(itemList.at(i),itemList.at(j));
-                }
-            }
-            else{//using title
-                if(itemList.at(i).GetTitle()<itemList.at(j).GetTitle())//a-z
-                {
-                    swapItem(itemList.at(i),itemList.at(j));
-                }
-            }
+            cout<<"corrupted rental Amount "<<s<<" is not a positive integer"<<endl;
+            return false;
         }
     }
+    return true;
 }
-//raw display
-void DisplayList(vector<Item> &itemList)
+//check if rank is valid
+bool isRankValid(string s)
 {
-    if(itemList.size()==0)
+    if(s=="VIP"||s=="Guest"||s=="Regular")
     {
-        cout<<"there is no items found";
-        return;
+        return true;
     }
-    for(int i=0;i<itemList.size();i++)
-    {
-        itemList.at(i).Display();
-    }
+    return false;
 }

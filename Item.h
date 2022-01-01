@@ -40,6 +40,17 @@ class Item{
             this->rentalFee=fee;
             rentalStatus=false;
         }
+    //copy constructor
+        Item(Item &item)
+        {
+            id=item.id;
+            title=item.id;
+            rent=item.rent;
+            loan=item.loan;
+            copies=item.copies;
+            rentalFee=item.rentalFee;
+            rentalStatus=item.rentalStatus;
+        }
     //Set 
         void SetID(string newID)
         {
@@ -135,37 +146,23 @@ class Item{
             copies++;
             CheckCopiesInStock();
         }
-        void SetReturn(int amount){
-            copies+=amount;
-            CheckCopiesInStock();
-        }
     //borrow Item
         bool CheckBorrow(){
-            //check
+            if(!rentalStatus)
+            {
+                cout<<"Item: "<<GetID()<<" is not available"<<endl;
+                return false;
+            }
+            return true;
+        }
+        void Borrow()
+        {
             if(copies>=1)
             {
-            //reduce
-            copies--;
-            //recheck stock
-            CheckCopiesInStock();
-            return true;
-            }
-            else{
-                return false;
-            }
-        }
-        bool CheckBorrow(int amount){
-             //check
-            if(copies>=amount)
-            {
-            //reduce
-            copies-=amount;
-            //recheck stock
-            CheckCopiesInStock();
-            return true;
-            }
-            else{
-                return false;
+                //reduce
+                copies--;
+                //recheck stock
+                CheckCopiesInStock();
             }
         }
     //Display
@@ -173,7 +170,44 @@ class Item{
             cout<<"--"<<endl;
             cout<<"Item: "<<title<<" - "<<id<<endl<<" rent type: "<<GetRentalType()<<endl<<" loan type: "<<GetLoanType()<<endl<<" copies: "<<copies<<endl<<" fee: "<<rentalFee<<endl<<" status: "<<rentalStatus<<endl;
         }
-    
+    //check if Item is 2 day video
+        bool is2DayVideo()
+        {
+            if(rent=="DVD"&&loan=="2-day")
+            {
+                return true;
+            }
+            else if(rent=="Record"&&loan=="2-day")
+            {
+                return true;
+            }
+            return false;
+        }
+    // compare DVD genre
+        virtual bool CompareGenre(string g)
+        {
+            return false;
+        }
+    //Get saving Link
+    virtual ostream& getSavingInfomation(ostream& os)
+	{
+		//action with os
+		string c=",";
+		os<<GetID()<<c<<GetTitle()<<c<<GetRentalType()<<c<<GetLoanType()<<c<<GetCopieInStock()<<c<<GetRentFee()<<endl;
+		return os;
+	}
+	//pass pointer
+	friend ostream& operator<<(ostream& os,Item* c)
+	{
+		//cout<<"does this get call"<<endl;
+		return c->getSavingInfomation(os);
+	}
+	//pass address
+	friend ostream& operator<<(ostream& os,Item& c)
+	{
+		//cout<<"does this get call"<<endl;
+		return c.getSavingInfomation(os);
+	}
 };
 class DVDItem:public Item{
     private:
@@ -199,6 +233,24 @@ class DVDItem:public Item{
     }
     //overriding
     void Display(){
+        cout<<"--"<<endl;
         cout<<"Item: "<<GetTitle()<<" - "<<GetID()<<endl<<" rent type: "<<GetRentalType()<<endl<<" loan type: "<<GetLoanType()<<endl<<" DVD Genre: "<<GetGenre()<<endl<<" copies: "<<GetCopieInStock()<<endl<<" fee: "<<GetRentFee()<<endl<<" status: "<<GetStatus()<<endl;
     }
+    //compare genre
+    bool CompareGenre(string g)
+    {
+        if(genre==g)
+        {
+            return true;
+        }
+        return false;
+    }
+    //Get saving Link
+    virtual ostream& getSavingInfomation(ostream& os)
+	{
+		//action with os
+		string c=",";
+		os<<GetID()<<c<<GetTitle()<<c<<GetRentalType()<<c<<GetLoanType()<<c<<GetCopieInStock()<<c<<GetRentFee()<<c<<GetGenre()<<endl;
+		return os;
+	}
 };

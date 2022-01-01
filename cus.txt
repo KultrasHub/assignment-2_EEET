@@ -1,0 +1,7 @@
+123,name,Tpa,123457,1,Guest
+I002-1988
+081,Khoa2,Tpa,123457,2,Guest
+I005-2015
+I002-1988
+092,Khoa,Tpa,123457,0,Regular
+121,Baka,Tpa,123457,0,VIP
