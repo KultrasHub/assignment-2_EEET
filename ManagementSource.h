@@ -1,5 +1,5 @@
 #include "Customer.h"
-#include "Checker.h"
+#include "UserInput.h"
 #include <fstream>
 #include <sstream>
 using namespace std;
@@ -138,18 +138,65 @@ class ItemManager{
             fout.close();
             cout<<"Saving Complete"<<endl;
         }
+    //get size
+        int Size()
+        {
+            return itemList.size();
+        }
     //add item To list
         void AddItem(Item* item)
         {
             itemList.push_back(item);
         }
+        void AddItem()
+        {
+            //input to create an Item 
+            cout<<"----"<<endl;
+            //id
+            string id=AskForItemID();
+            //name
+            string name=AskForItemName();
+            //rennt
+            string rent=AskForRentType();
+            //loan
+            string loan=AskForLoanName();
+            //copies
+            int copies=AskForCopiesAmount();
+            //fee
+            float fee=AskForFee();
+            //build Item
+            if(rent=="DVD")
+            {
+                //genre
+                string genre=AskForGenre();
+                Item* item=new DVDItem(id,name,rent,loan,copies,fee,genre);
+                //add to list
+                AddItem(item);
+            }
+            else{
+                Item* item =new Item(id,name,rent,loan,copies,fee);
+                AddItem(item);
+            }
+       }
     //remove item from List
         void RemoveItem(int index)
         {
-            itemList.erase(itemList.begin()+index);
+            //must check that it is not borrowed
+            if(itemList.at(index)->GetBorrowCount()>0)
+            {
+                cout<<"cannot delete item that is currently borrowed"<<endl;
+                return;
+            }
+            else{
+                //dealocate
+                delete itemList.at(index);
+                //delete pointer before erase from lsit
+                itemList.erase(itemList.begin()+index);
+                cout<<"Item has been deleted"<<endl;
+            }
         }
     //get item from List
-        Item* GetItem(int index)
+        Item*& GetItem(int index)
         {
             return itemList.at(index);
         } 
@@ -206,6 +253,19 @@ class ItemManager{
                     itemList.at(i)->Display();
                 }
             }
+        }
+    //display Selection
+        void DisplaySelection()
+        { 
+            for(int i=0;i<itemList.size();i++)
+            {
+                itemList.at(i)->Display(i);
+            }
+        }
+    //display item at index
+        void DisplayItem(int index)
+        {
+            itemList.at(index)->Display();
         }
     //search
     //by id
@@ -294,7 +354,6 @@ class ItemManager{
             return NULL;
         }
 //Action function-----------------------------------------------------------------
-private:
     //sort by id or title
     void swapItem(Item* &i1,Item* &i2)
     {
@@ -302,6 +361,7 @@ private:
         i1=i2;
         i2=temp;
     }
+    private:
     //sort item list base on key( 0 for id, 1 for title) in alphabetical order
     void SortListAZ(bool usingId=true)
     {
@@ -479,6 +539,11 @@ class CustomerManager{
         {
             fileLocation=location;
         }
+        //getter 
+        int Size()
+        {
+            return customer.size();
+        }
         //Write to file
         void WriteToFile()
         {
@@ -503,6 +568,53 @@ class CustomerManager{
         void AddCustomer(Customer* c)
         {
             customer.push_back(c);
+        }
+        //Create and add Customer
+        void AddCustomer()
+        {
+            //input to create an Item 
+            cout<<"----"<<endl;
+            //id
+            string id=AskForCustomerID();
+            //name
+            string name=AskForCustomerName();
+            //address
+            string address=AskForAddress();
+            //phone
+            string phone=AskForPhoneNumber();
+            //copies
+            string rank=AskForRank();
+            //create customer
+            if(rank=="Guest")
+            {
+                //Guest
+                Customer* cus=new GuestAccount(name,id,address,phone);
+                //add to list
+                AddCustomer(cus);
+                cout<<"Customer has been added"<<endl;
+            }
+            else if(rank =="Regular")
+            {
+                //Regular
+                Customer* cus=new RegularAccount(name,id,address,phone);
+                //add to list
+                AddCustomer(cus);
+                cout<<"Customer has been added"<<endl;
+            }
+            else if(rank=="VIP")
+            {
+                //VIP
+                Customer* cus=new VIPAccount(name,id,address,phone);
+                //add to List
+                AddCustomer(cus);
+                cout<<"Customer has been added"<<endl;
+            }
+            else{
+                //unlikely to run
+                // invalid rank
+                cout<<"Invalid Rank Error!"<<endl;
+                cout<<"Failed to build customer"<<endl;
+            }
         }
         //remove customer from List
         void RemoveCustomer(int index)
@@ -572,6 +684,22 @@ class CustomerManager{
                 }
             }
         }
+        //display selection
+        void DisplaySelection()
+        {
+            for(int i=0;i<customer.size();i++)
+            {
+                customer.at(i)->DisplaySelection(i);
+            } 
+        }
+        //display protmotion
+        void DisplayPromotion()
+        {
+            for(int i=0;i<customer.size();i++)
+            {
+                customer.at(i)->DisplayPromotion(i);
+            } 
+        }
         //get customer by index
         Customer* GetCustomer(int id)
         {
@@ -601,8 +729,42 @@ class CustomerManager{
                 }
             }
         }
+        //promote
+        void Promote(int index)
+        {
+            if(customer.at(index)->CanPromote())
+            {
+                //promotable
+                //check rank
+                if(customer.at(index)->getRank()=="Guest")
+                {
+                    //guest to regular
+                    Customer* temp=new RegularAccount(customer.at(index));
+                    //swap with the current in member
+                    swap(temp,customer.at(index));
+                    //delete
+                    delete temp;
+                }
+                else if(customer.at(index)->getRank()=="Regular")
+                {
+                    //regular to VIP
+                    Customer* temp=new VIPAccount(customer.at(index));
+                    //swap with current in member
+                    swap(temp,customer.at(index));
+                    //delete
+                    delete temp;
+                }
+                else{
+                    //SHOULD NOT RUN
+                    cout<<"Cannot promote VIP MEMBERs!"<<endl;
+                    return;
+                }
+            }
+            else{
+                cout<<"This customer is not qualified for promotion"<<endl;
+            }
+        }
     //Action function-----------------------------------------------------------------
-    private:
     //sort by id or title
     void swapItem(Customer* &i1,Customer* &i2)
     {
@@ -610,6 +772,7 @@ class CustomerManager{
         i1=i2;
         i2=temp;
     }
+    private:
     //sort item list base on key( 0 for id, 1 for title) in alphabetical order
     void SortListAZ(bool usingId=true)
     {

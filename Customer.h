@@ -42,7 +42,7 @@ public:
         // }
         itemList.clear();
 	}
-    //
+    //display
 	virtual void displayAllInformation(){
 		cout<<"--"<<endl;
         cout << "Name: " << this->name << endl;
@@ -50,6 +50,18 @@ public:
 	    cout << "Address: " << this->address << endl;
 	    cout << "Phone: " << this->phone << endl;
     }
+	void DisplaySelection(int index)
+	{
+		cout<<index<<" ."<<name<<" -id: "<<id<<endl;
+	}
+	int DisplayAttribute()
+	{
+		cout<<"0 .Id: "<<id<<endl;
+		cout<<"1 .Name: "<<name<<endl;
+		cout<<"2 .Address: "<<address<<endl;
+		cout<<"3 .Phone: "<<phone<<endl;
+		return 4;
+	}
     //setter, getter
 	//setter
 	void setName(string name){
@@ -137,11 +149,24 @@ public:
 			cout<<i<<". "<<itemList.at(i);
 		}
 	}
+	//display promotion
+	void DisplayPromotion(int index)
+	{
+		cout<<index<<" ."<<getName()<<" -id: "<<getId()<<"has rented "<<rentCount<<"/3 times ";
+		if(CanPromote())
+		{
+			cout<<" :ABLE to be promoted"<<endl;
+		}
+		else{
+			cout<<" :UNABLE to be promoted"<<endl;
+		}
+	}
 	//add an item to borrow list
 	virtual void AddBorrowItem(Item* item)=0;
 	virtual void AddBorrowItemWithNoUpdate(Item* item)
 	{
 		itemList.push_back(item);
+		item->EmptyBorrow();
 	}
 	//return an item at the index
 	virtual void ReturnAnItem(int atIndex)
@@ -162,15 +187,16 @@ public:
 	//not use this for now
 	//virtual void ReturnAnItem(string id);
 	//check if this account can be promoted
-	bool CanPromote() 
+	virtual bool CanPromote() 
 	{
 		if(rentCount>=3)
 		{
 			return true;
 		}
-		cout<<"This account need "<<3-rentCount<<" rents "<<" to be able to get promoted!"<<endl;
+		//cout<<"This account need "<<3-rentCount<<" rents "<<" to be able to get promoted!"<<endl;
 		return false;
 	}
+	
 };
 
 //GuestAccount
@@ -229,7 +255,7 @@ class RegularAccount:public Customer{
 		rentCount=0;
 	};
 	//copy constructor from guess account for promotion
-	RegularAccount(GuestAccount* guest):Customer(guest->getName(),guest->getId(),guest->getAddress(),guest->getPhone()){
+	RegularAccount(Customer* guest):Customer(guest->getName(),guest->getId(),guest->getAddress(),guest->getPhone()){
 		rankName="RegularAccount";
 		rentCount=0;
 		cout<<"Guest Account:"<<guest->getId()<<" has been promoted to "<<"Regular Account"<<endl;
@@ -271,7 +297,7 @@ class VIPAccount:public Customer{
 		rentCount=0;
 	};
 	//copy constructor for promotion
-	VIPAccount(RegularAccount* regularAccount):Customer(regularAccount->getName(),regularAccount->getId(),regularAccount->getAddress(),regularAccount->getPhone()){
+	VIPAccount(Customer* regularAccount):Customer(regularAccount->getName(),regularAccount->getId(),regularAccount->getAddress(),regularAccount->getPhone()){
 		rankName="VIP";
 		rentCount=0;
 		cout<<"Regular Account:"<<regularAccount->getId()<<" has been promoted to"<<" VIP Account"<<endl;
@@ -312,5 +338,11 @@ class VIPAccount:public Customer{
 	void SetRewardPoint(int point)
 	{
 		rewardPoint=point;
+	}
+	//promote
+	bool CanPromote()
+	{
+		cout<<"- Highest Rank";
+		return false;
 	}
 };

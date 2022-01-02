@@ -90,6 +90,30 @@ bool isIdValid(string s)
 {
     return true;
 }
+//check item name
+bool isItemNameValid(const string s)
+{
+    if(s.length()<3)
+    {
+        cout<<"title too short, at least 3 characters long"<<endl;;
+        return false;
+    }
+    int count=0;
+    //check if all space
+    for(int i=0;i<s.length();i++)
+    {
+        if(s[i]==' ')
+        {
+            count++;
+        }
+    }
+    if(count==s.length())
+    {
+        cout<<"you cannot leave empty space"<<endl;
+        return false;
+    }
+    return true;
+}
 //check DVD genre
 bool isDVDGenreValid(string s)
 {
@@ -147,4 +171,28 @@ bool isRankValid(string s)
         return true;
     }
     return false;
+}
+//check name valid
+bool isNameValid(string s)
+{
+    if(s.length()<5)
+    {
+        cout<<"name too short, at least 5 characters long"<<endl;;
+        return false;
+    }
+    int count=0;
+    //check if all space
+    for(int i=0;i<s.length();i++)
+    {
+        if(s[i]==' ')
+        {
+            count++;
+        }
+    }
+    if(count==s.length())
+    {
+        cout<<"you cannot leave empty space"<<endl;
+        return false;
+    }
+    return true;
 }

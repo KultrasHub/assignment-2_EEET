@@ -10,6 +10,31 @@ class Item{
         int copies;
         float rentalFee;
         bool rentalStatus;
+        int borrowCount;
+    private:
+    ///Check there are still copies in stock and set rental status accordingly
+        void CheckCopiesInStock()
+        {
+            if(copies<=0)
+            {
+                if(!rentalStatus)
+                {
+                    return;
+                }
+                //there are no copy left
+                rentalStatus=false;
+                cout<<"item: "<<id<<" has gone out of stock!"<<endl;
+            }
+            else{
+                if(rentalStatus)
+                {
+                    return;
+                }
+                //there are still copies
+                rentalStatus=true;
+                cout<<"item: "<<id<<" now availanle for service!"<<endl;
+            }
+        }
     // method
     public:
     //require copies In stock
@@ -41,15 +66,15 @@ class Item{
             rentalStatus=false;
         }
     //copy constructor
-        Item(Item &item)
+        Item(Item *item)
         {
-            id=item.id;
-            title=item.id;
-            rent=item.rent;
-            loan=item.loan;
-            copies=item.copies;
-            rentalFee=item.rentalFee;
-            rentalStatus=item.rentalStatus;
+            id=item->id;
+            title=item->title;
+            rent=item->rent;
+            loan=item->loan;
+            copies=item->copies;
+            rentalFee=item->rentalFee;
+            rentalStatus=item->rentalStatus;
         }
     //Set 
         void SetID(string newID)
@@ -71,10 +96,16 @@ class Item{
         void SetCopiesInStock(int amount)
         {
             copies=amount;
+            //CHeck 
+            CheckCopiesInStock();
         }
         void SetRentFee(float value)
         {
             rentalFee=value;
+        }
+        virtual void SetGenre(string genre)
+        {
+            cout<<"Error has occured! genre should not be set in item"<<endl;
         }
     //Get
         string GetID()
@@ -105,29 +136,11 @@ class Item{
         {
             return rentalStatus;
         }
-    //Other Method
-    private:
-    ///Check there are still copies in stock and set rental status accordingly
-        void CheckCopiesInStock()
+        bool GetBorrowCount()
         {
-            if(copies<=0)
-            {
-                if(!rentalStatus)
-                {
-                    return;
-                }
-                //there are no copy left
-                rentalStatus=false;
-            }
-            else{
-                if(rentalStatus)
-                {
-                    return;
-                }
-                //there are still copies
-                rentalStatus=true;
-            }
+            return borrowCount;
         }
+    //Other Method
     public:
     //add default of one
         void AddCopies()
@@ -164,11 +177,30 @@ class Item{
                 //recheck stock
                 CheckCopiesInStock();
             }
+            borrowCount++;
+        }
+        void EmptyBorrow()
+        {
+            borrowCount++;//only mark that the item is currently borrowed
         }
     //Display
         virtual void Display(){
             cout<<"--"<<endl;
             cout<<"Item: "<<title<<" - "<<id<<endl<<" rent type: "<<GetRentalType()<<endl<<" loan type: "<<GetLoanType()<<endl<<" copies: "<<copies<<endl<<" fee: "<<rentalFee<<endl<<" status: "<<rentalStatus<<endl;
+        }
+        void Display(int index)
+        {
+            cout<<index<<" .Item: "<<title<<" - "<<id<<endl;
+        }
+        virtual int DisplayAttribute()
+        {
+            cout<<"0 .id: "<<GetID()<<endl;
+            cout<<"1 .title: "<<GetTitle()<<endl;
+            cout<<"2 .rent: "<<GetRentalType()<<endl;
+            cout<<"3 .loan: "<<GetLoanType()<<endl;
+            cout<<"4 .copies: "<<GetCopieInStock()<<endl;
+            cout<<"5 .fee: "<<GetRentFee()<<endl;
+            return 6;
         }
     //check if Item is 2 day video
         bool is2DayVideo()
@@ -222,6 +254,11 @@ class DVDItem:public Item{
     DVDItem(string id,string title,string rType,string lType,float fee,string genre):Item::Item(id,title,rType,lType,fee){
         this->genre=genre;
     }
+    //upgrade
+    DVDItem(Item* item,string genre):Item::Item(item)
+    {
+        this->genre=genre;
+    }
     //Set
     void SetGenre(string g){
         genre=g;
@@ -253,4 +290,12 @@ class DVDItem:public Item{
 		os<<GetID()<<c<<GetTitle()<<c<<GetRentalType()<<c<<GetLoanType()<<c<<GetCopieInStock()<<c<<GetRentFee()<<c<<GetGenre()<<endl;
 		return os;
 	}
+    //display attribute
+    int DisplayAttribute()
+    {
+        Item::DisplayAttribute();
+        cout<<"6 .DVDGenre: "<<GetGenre()<<endl;
+        return 7;
+    }
+
 };
