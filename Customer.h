@@ -112,6 +112,10 @@ public:
 	{
 		return rankName;
 	}
+	int getItemSize()
+	{
+		return itemList.size();
+	}
 	//construct an osstream store informationn for saving
 	//savign innfomation
 	ostream& getSavingInfomation(ostream& os)
@@ -196,7 +200,18 @@ public:
 		//cout<<"This account need "<<3-rentCount<<" rents "<<" to be able to get promoted!"<<endl;
 		return false;
 	}
-	
+	//check if customer has borrow an instance of the item
+	bool InBorrow(Item* item)
+	{
+		for(int i=0;i<itemList.size();i++)
+		{
+			if(itemList.at(i)->GetID()==item->GetID())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 };
 
 //GuestAccount
@@ -216,6 +231,12 @@ class GuestAccount:public Customer{
 		{
 			//there are no in store to borrow
 			cout<<"There are no available copies in store for item"<<item->GetID()<<endl;
+			return;
+		}
+		//check if customer has borrowed an instance of this item
+		if(InBorrow(item))
+		{
+			cout<<rankName<<" member-id:"<<getId()<<" already borrowed an instance of this item"<<endl;
 			return;
 		}
 		//check if this customer still abkle to borrow item
@@ -272,6 +293,12 @@ class RegularAccount:public Customer{
 			cout<<"There are no available copies in store"<<endl;
 			return;
 		}
+		//check if customer has borrowed an instance of this item
+		if(InBorrow(item))
+		{
+			cout<<rankName<<" member-id:"<<getId()<<" already borrowed an instance of this item"<<endl;
+			return;
+		}
 		//other wise this item has been borrowed succesfully
 		cout<<rankName<<" id: "<<getId()<<" has successfully borrowed "<<item->GetID()<<endl;
 		//guest can borrow
@@ -313,6 +340,13 @@ class VIPAccount:public Customer{
 			cout<<"There are no available copies in store"<<endl;
 			return;
 		}
+		//check if customer has borrowed an instance of this item
+		if(InBorrow(item))
+		{
+			cout<<rankName<<" member-id:"<<getId()<<" already borrowed an instance of this item"<<endl;
+			return;
+		}
+
 		//other wise this item has been borrowed succesfully
 		cout<<rankName<<" member-id: "<<getId()<<" has successfully borrowed "<<item->GetID()<<endl;
 		//guest can borrow

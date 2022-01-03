@@ -9,7 +9,7 @@ bool isCopiesValid(string s)
     {
         if (!isdigit(s[i]))
         {
-            cout<<"corrupted amount of copies in Stock: "<<s<<" is not a positive integer"<<endl;
+            //cout<<"corrupted amount of copies in Stock: "<<s<<" is not a positive integer"<<endl;
             return false;
         }
     }

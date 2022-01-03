@@ -27,7 +27,5 @@ int main(int argc, char const *argv[])
     // //--
     // cout<<"--"<<endl;
     // iList.DisplayAllItem();
-    iList.WriteToFile();
-    //cList.WriteToFile();
     return 0;
 }

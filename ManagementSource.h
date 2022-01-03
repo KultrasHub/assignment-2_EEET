@@ -132,7 +132,7 @@ class ItemManager{
             // write to file
             for(int i=0;i<itemList.size();i++)
             {
-                cout<<"item at index: "<<i<<"- "<<itemList.at(i);
+                //cout<<"item at index: "<<i<<"- "<<itemList.at(i);
                 fout<<itemList.at(i);
             }
             fout.close();
@@ -269,28 +269,30 @@ class ItemManager{
         }
     //search
     //by id
-        void SearchByID(string id)
+        bool SearchByID(string id)
         {
             for(int i=0;i<itemList.size();i++)
             {
                 if(itemList.at(i)->GetID()==id)
                 {
                     itemList.at(i)->Display();
-                    return;
+                    return true;
                 }
             }
+            return false;
         }
     //by title
-        void SearchByTitle(string title)
+        bool SearchByTitle(string title)
         {
             for(int i=0;i<itemList.size();i++)
             {
                 if(itemList.at(i)->GetTitle()==title)
                 {
                     itemList.at(i)->Display();
-                    return;
+                    return true;
                 }
             }
+            return false;
         }
     //search only need title and id
     //by rentType
@@ -675,7 +677,7 @@ class CustomerManager{
                 cout<<"Your input rank is not found in our system"<<endl;
                 return;
             }
-            cout<<"Display "<<rankName<<" account"<<endl;
+            cout<<"Group of "<<rankName<<" account:"<<endl;
             for(int i=0;i<customer.size();i++)
             {
                 if(customer.at(i)->compareRank(rankName))
@@ -706,28 +708,30 @@ class CustomerManager{
             return customer.at(id);
         }
         //get customer by id
-        void SearchById(string id)
+        bool SearchById(string id)
         {
             for(int i=0;i<customer.size();i++)
             {
                 if(customer.at(i)->getId()==id)
                 {
                     customer.at(i)->displayAllInformation();
-                    return; 
+                    return true; 
                 }
             }
+            return false;
         }
         //search Customer by name
-        void SearchByName(string name)
+        bool SearchByName(string name)
         {
             for(int i=0;i<customer.size();i++)
             {
                 if(customer.at(i)->getName()==name)
                 {
                     customer.at(i)->displayAllInformation();
-                    return;
+                    return true;
                 }
             }
+            return false;
         }
         //promote
         void Promote(int index)

@@ -174,6 +174,7 @@ class Item{
             {
                 //reduce
                 copies--;
+                cout<<"stock has reduced by one"<<endl;
                 //recheck stock
                 CheckCopiesInStock();
             }
