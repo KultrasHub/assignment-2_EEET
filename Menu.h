@@ -517,14 +517,8 @@ void Search(ItemManager &iList,CustomerManager &cList)
     cout<<"Select a search option:"<<endl;
     cout<<"0 .Customer"<<endl;
     cout<<"1 .Item"<<endl;
-    cout<<"2 .Return to mainn menu"<<endl;
+    cout<<"2 .Return to main menu"<<endl;
     int option=AskForSelection(3);
-    //ask for any innput
-    string input;
-    cout<<"-----"<<endl;
-    cout<<"Please Input Key word (id, customer name or item title) you want to search for"<<endl;
-    cin.ignore();
-    getline(cin,input);
     if(option==0)
     {
         //customer
