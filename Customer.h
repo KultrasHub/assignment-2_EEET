@@ -156,7 +156,7 @@ public:
 	//display promotion
 	void DisplayPromotion(int index)
 	{
-		cout<<index<<" ."<<getName()<<" -id: "<<getId()<<"has rented "<<rentCount<<"/3 times ";
+		cout<<index<<" ."<<getName()<<" -id: "<<getId()<<" has rented "<<rentCount<<"/3 times ";
 		if(CanPromote())
 		{
 			cout<<" :ABLE to be promoted"<<endl;

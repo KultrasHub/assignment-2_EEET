@@ -7,8 +7,7 @@ string AskForItemID()
 {
     string id;
     cout<<"Please enter id for this item:"<<endl;
-    cin.ignore();
-    getline(cin,id);
+    cin>>id;
     //check for valid
     if(isIdValid(id))
     {
@@ -50,8 +49,7 @@ string AskForRentType()
     cout<<"1 .Record"<<endl;
     cout<<"2 .DVD"<<endl;
     cout<<"3 .Game"<<endl;
-    cin.ignore();
-    getline(cin,type);
+    cin>>type;
     if(type=="1")
     {
         return "Record";
@@ -79,8 +77,7 @@ string AskForLoanName()
     cout<<"Please enter an option for loan type"<<endl;
     cout<<"1 .2-day"<<endl;
     cout<<"2 .1-week"<<endl;
-    cin.ignore();
-    getline(cin,type);
+    cin>>type;
     if(type=="1")
     {
         return "2-day";
@@ -225,8 +222,7 @@ string AskForCustomerID()
 {
     string id;
     cout<<"Please enter id for this Customer:"<<endl;
-    cin.ignore();
-    getline(cin,id);
+    cin>>id;
     //check for valid
     if(isCustomerIdValid(id))
     {
@@ -274,8 +270,7 @@ string AskForPhoneNumber()
 {
     string phone;
     cout<<"Please enter phone number of this Customer:"<<endl;
-        cin.ignore();
-    getline(cin,phone);
+        cin>>phone;
     if(isPhoneValid(phone))
     {
         return phone;
