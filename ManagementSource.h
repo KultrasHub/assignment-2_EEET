@@ -73,7 +73,7 @@ class ItemManager{
                 float fee=stof(row.at(5));
                 //build Item
                 //check if word is valid
-                if(row.at(2)!="DVD")
+                if(row.at(2)!="DVD"&&row.at(2)!="Record")//accept wrong rent type
                 {
                     Item* obj=new Item(row.at(0),row.at(1),row.at(2),row.at(3),copiesAmount,fee);
                     itemList.push_back(obj);
@@ -165,7 +165,7 @@ class ItemManager{
             //fee
             float fee=AskForFee();
             //build Item
-            if(rent=="DVD")
+            if(rent=="DVD"||rent=="Record")
             {
                 //genre
                 string genre=AskForGenre();

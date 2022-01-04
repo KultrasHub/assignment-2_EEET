@@ -68,7 +68,7 @@ void ItemAction(ItemManager &iList,CustomerManager &cList)
             string rent=AskForRentType();
             current->SetRetalType(rent);
             //change pointer
-            if(preRent=="DVD"&&rent!="DVD")
+            if(preRent!="Game"&&rent=="Game")
             {
                 //downgrade DVD to Item
                 Item* temp=new Item(current);
@@ -76,11 +76,11 @@ void ItemAction(ItemManager &iList,CustomerManager &cList)
                 //deallocate pointer
                 delete temp;
             }
-            else if(preRent!="DVD"&&rent=="DVD")
+            else if(preRent=="Game"&&rent!="Game")
             {
                 //upgrade item to DVD
                 //ask for DVD Genre
-                cout<<"You just update an non-DVD to DVD item! We need genre for this DVD item"<<endl;
+                cout<<"You just update an non-video to video item! We need genre for this video item"<<endl;
                 string genre=AskForGenre();
                 Item* temp=new DVDItem(current,genre);
                 iList.swapItem(temp,iList.GetItem(option));
