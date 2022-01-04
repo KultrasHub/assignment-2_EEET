@@ -88,6 +88,10 @@ bool isLoanTypeValid(string s)
 //check id
 bool isIdValid(string s)
 {
+    if (s.length() != 9) {
+        cout << "Invalid ID Length" << endl;
+        return false;
+    }
     if (s[0] != 'I') {
         cout << "Wrong ID base" << endl;
         return false;
@@ -146,6 +150,10 @@ bool isDVDGenreValid(string s)
 //Checking Customer-----------------------------------------------------------------
 bool isCustomerIdValid(string s)
 {
+    if (s.length() != 4) {
+        cout << "Invalid ID Length" << endl;
+        return false;
+    }
     if (s[0] != 'C') {
         cout << "Wrong ID base" << endl;
         return false;
