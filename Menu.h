@@ -529,6 +529,12 @@ void Search(ItemManager &iList,CustomerManager &cList)
     {
         //customer
         //check id
+	//ask for any innput
+        string input;
+        cout<<"-----"<<endl;
+        cout<<"Please Input Key word (id, customer name or item title) you want to search for"<<endl;
+        cin.ignore();
+        getline(cin,input);
         if(cList.SearchById(input))
         {
             cout<<"FOUND!!!"<<endl;
@@ -546,6 +552,12 @@ void Search(ItemManager &iList,CustomerManager &cList)
     else if(option==1)
     {
         //search item
+	//ask for any innput
+        string input;
+        cout<<"-----"<<endl;
+        cout<<"Please Input Key word (id, customer name or item title) you want to search for"<<endl;
+        cin.ignore();
+        getline(cin,input);
         if(iList.SearchByID(input))
         {
             cout<<"FOUND"<<endl;
