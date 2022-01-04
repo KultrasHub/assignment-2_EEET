@@ -49,8 +49,7 @@ string AskForRentType()
     cout<<"1 .Record"<<endl;
     cout<<"2 .DVD"<<endl;
     cout<<"3 .Game"<<endl;
-    cin.ignore();
-    getline(cin,type);
+    cin>>type;
     if(type=="1")
     {
         return "Record";
@@ -78,8 +77,7 @@ string AskForLoanName()
     cout<<"Please enter an option for loan type"<<endl;
     cout<<"1 .2-day"<<endl;
     cout<<"2 .1-week"<<endl;
-    cin.ignore();
-    getline(cin,type);
+    cin>>type;
     if(type=="1")
     {
         return "2-day";
