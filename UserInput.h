@@ -270,8 +270,7 @@ string AskForPhoneNumber()
 {
     string phone;
     cout<<"Please enter phone number of this Customer:"<<endl;
-        cin.ignore();
-    getline(cin,phone);
+        cin>>phone;
     if(isPhoneValid(phone))
     {
         return phone;
