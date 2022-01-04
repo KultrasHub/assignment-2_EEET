@@ -7,8 +7,7 @@ string AskForItemID()
 {
     string id;
     cout<<"Please enter id for this item:"<<endl;
-    cin.ignore();
-    getline(cin,id);
+    cin>>id;
     //check for valid
     if(isIdValid(id))
     {
@@ -225,8 +224,7 @@ string AskForCustomerID()
 {
     string id;
     cout<<"Please enter id for this Customer:"<<endl;
-    cin.ignore();
-    getline(cin,id);
+    cin>>id;
     //check for valid
     if(isCustomerIdValid(id))
     {
