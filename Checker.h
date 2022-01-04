@@ -88,6 +88,26 @@ bool isLoanTypeValid(string s)
 //check id
 bool isIdValid(string s)
 {
+    if (s[0] != 'I') {
+        cout << "Wrong ID base" << endl;
+        return false;
+    }
+    for (int i = 1; i < s.length()/2; i++) {
+        if (s[i] < 48 || s[i] > 57) {
+            cout << "Problem in ID format" << endl;
+            return false;
+        }
+    }
+    if (s[4] != '-') {
+        cout << "must have hyphen character" << endl;
+        return false;
+    }
+    for (int i = 5; i < s.length(); i++) {
+        if (s[i] < 48 || s[i] > 57) {
+            cout << "Problem in year format" << endl;
+            return false;
+        }
+    }
     return true;
 }
 //check item name
@@ -126,6 +146,16 @@ bool isDVDGenreValid(string s)
 //Checking Customer-----------------------------------------------------------------
 bool isCustomerIdValid(string s)
 {
+    if (s[0] != 'C') {
+        cout << "Wrong ID base" << endl;
+        return false;
+    }
+    for (int i = 1; i < s.length(); i++) {
+        if (s[i] < 48 || s[i] > 57) {
+            cout << "Problem in ID format" << endl;
+            return false;
+        }
+    }
     //cout<<"id work"<<endl;
     return true;
 }
